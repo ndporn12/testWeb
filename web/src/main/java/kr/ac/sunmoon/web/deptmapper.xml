@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<!-- 	select SEQ_DEPT_DEPTNO.NEXTVAL
+		from dual; -->
+	
+	<mapper namespace="kr.ac.sunmoon.web.DeptMapper">
+		<delete id="delete" parameterType="kr.ac.sunmoon.web.Dept">
+			delete dept
+			where deptno=#{deptno}
+		</delete>
+		<update id="update" parameterType="kr.ac.sunmoon.web.Dept">
+			update dept
+			set LOC='some'
+			where deptno=#{deptno}
+		</update>
+		
+		<select id="select" parameterType="kr.ac.sunmoon.web.Dept" resultType="kr.ac.sunmoon.web.Dept">
+			SELECT
+				 DEPTNO
+				,DNAME
+				,LOC
+			FROM
+				 DEPT
+			WHERE
+				DEPTNO = #{deptno}
+		</select>
+		
+		<insert id="insert" parameterType="kr.ac.sunmoon.web.Dept">
+		<selectKey keyProperty="deptno" keyColumn="deptno" order="BEFORE" resultType="int">
+			select
+				SEQ_DEPT_DEPTNO.NEXTVAL
+			from
+				dual
+		</selectKey>
+			INSERT INTO
+			DEPT
+			VALUES 
+			(#{deptno},#{dname},#{loc})
+		</insert>
+		
+		<select id="selectAll" resultType="kr.ac.sunmoon.web.Dept">
+			select
+				deptno
+			   ,dname
+			   ,loc
+			from
+				dept
+		</select>
+	</mapper>

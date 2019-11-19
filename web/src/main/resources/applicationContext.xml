@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context ="http://www.springframework.org/schema/context"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop ="http://www.springframework.org/schema/aop"
+	   xmlns:tx ="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   					   http://www.springframework.org/schema/context
+	   					   http://www.springframework.org/schema/context/spring-context.xsd
+	   					   http://www.springframework.org/schema/aop
+	   					   http://www.springframework.org/schema/aop/spring-aop.xsd
+	   					   http://www.springframework.org/schema/tx
+	   					   http://www.springframework.org/schema/tx/spring-tx.xsd">	
+	   					   			   
+	   <context:annotation-config/>		
+	   <aop:aspectj-autoproxy/>	
+	   <tx:annotation-driven transaction-manager="transactionManager"/>
+	   	   
+		<bean id="universityService" class="kr.ac.sunmoon.web.UniversityService"/>
+		
+		<bean id="studentDao" class="kr.ac.sunmoon.web.StudentDao"/>
+		
+		<bean id="secondService" class="kr.ac.sunmoon.web.SecondService"/>
+		
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+			<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"/>
+			<property name="username" value="mybatis"/>
+			<property name="password" value="mybatis$"/>
+		</bean>		
+		
+		<bean id="empDao" class="kr.ac.sunmoon.web.EmpDao">
+			<constructor-arg ref="dataSource"/>
+		</bean>
+		<bean id ="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="dataSource"/>
+		</bean>
+
+</beans>
+
+<!-- 		<aop:config>
+			<aop:aspect id="measureAspect" ref="exeTimeAspect">
+				<aop:pointcut id="publicMethod"
+					expression="execution(public * kr.ac.sunmoon.web..*(..))"/>
+				<aop:around pointcut-ref="publicMethod" method="measure"/>
+			</aop:aspect>
+		</aop:config>
+ -->
